@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<title>233 Assembler</title>
+	<meta charset="utf-8">
+	<link href="static/style.css" rel="stylesheet">
+</head>
+<body>
+    <form method="post" id="assemble">
+        <textarea name="asm">{{ asm_text }}</textarea><br>
+        <input type="submit" name="submit" value="Assemble">
+    </form>
+    <section id="binary">
+        <h1>Binary</h1>
+        <pre>{{ binary_text }}</pre>
+    </section>
+    <section id="hex">
+        <h1>Hex</h1>
+        <pre>{{ hexd_text }}</pre>
+    </section>
+</body>

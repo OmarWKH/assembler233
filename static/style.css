@@ -1,0 +1,12 @@
+/*
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+*/
+
+textarea {
+    min-height: 25vh;
+    min-width: 75vw;
+}
