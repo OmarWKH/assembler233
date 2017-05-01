@@ -19,4 +19,17 @@
         <h1>Hex</h1>
         <pre>{{ hexd_text }}</pre>
     </section>
+    <section id="help">
+        <h1>Syntax</h1>
+        <pre>Order of registers: Rd, Rs, Rt
+Refer to registers with their numbers (0..7).
+In lw and sw: Register goes before memory address.
+Put labels between parentheses.
+Lead comments with # or //.
+                
+Example:
+addi 2 1 5  # adds r1 with immediate 5 and stores in r2.
+(end)       # label
+j end       # jump to label</pre>
+    </section>
 </body>
