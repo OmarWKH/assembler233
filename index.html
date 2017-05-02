@@ -22,21 +22,25 @@
     <section id="help">
         <h1>Syntax</h1>
         <pre>Order of registers: Rd, Rs, Rt
-Refer to registers with their numbers (0..7).
+Refer to registers as r0, r1, .., r7.
 In lw and sw: Register goes before memory address.
 Put labels between parenthesis.
 Lead comments with # or //.
                 
 Example:
 (start)
-addi 2 1 5  # adds r1 with immediate 5 and stores in r2.
+addi r2 r1 5  # adds r1 with immediate 5 and stores in r2.
 j start     # jump to start (start will be placed with -1)</pre>
     </section>
     <section id="changes">
         <h1>Change logs</h1>
+        v0.1
         <ul>
-            v0.1
             <li>Jump and branch using labels.</li>
+        </ul>
+        v0.2
+        <ul>
+            <li>Use symbols to refer to registers.</li>
         </ul>
     </section>
 </body>

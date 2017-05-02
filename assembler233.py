@@ -14,7 +14,16 @@ def binary_to_hex(binary_text):
 	return output
 
 def assemble(asm_text):
-	symbols = {}
+	symbols = {
+		'R0':		0,
+		'R1':		1,
+		'R2':		2,
+		'R3':		3,
+		'R4':		4,
+		'R5':		5,
+		'R6':		6,
+		'R7':		7,
+	}
 	symbols.update(find_labels(asm_text))
 	output = ''
 	count = 0
@@ -43,6 +52,9 @@ def find_labels(asm_text):
 		else:
 			count += 1
 	return labels
+
+def register(symbols, symbol):
+	return symbols[symbol.upper()]
 
 def translate(instruction, symbols, count):
 	instruction = instruction.split()
@@ -121,39 +133,39 @@ def fcode(x):
 
 def translate_r(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rd = int(instruction[1])
-	rs = int(instruction[2])
-	rt = int(instruction[3])
+	rd = register(symbols, instruction[1])
+	rs = register(symbols, instruction[2])
+	rt = register(symbols, instruction[3])
 	f = fcode(instruction[0])
 	return "{0:05b}{1:03b}{2:03b}{3:03b}{4:02b}".format(op, rs, rd, rt, f)
 
 def translate_i(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rd = int(instruction[1])
-	rs = int(instruction[2])
+	rd = register(symbols, instruction[1])
+	rs = register(symbols, instruction[2])
 	im5 = int(instruction[3])
 	return "{0:05b}{1:03b}{2:03b}{3:05b}".format(op, rs, rd, im5 % (1 << 5))
 
 def translate_jr(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rs = int(instruction[1])
+	rs = register(symbols, instruction[1])
 	return "{0:05b}{1:03b}00000000".format(op, rs)
 
 def translate_lw(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rd = int(instruction[1])
-	rs = int(instruction[2])
+	rd = register(symbols, instruction[1])
+	rs = register(symbols, instruction[2])
 	return "{0:05b}{1:03b}{2:03b}00000".format(op, rs, rd)
 
 def translate_sw(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rt = int(instruction[1])
-	rs = int(instruction[2])
+	rt = register(symbols, instruction[1])
+	rs = register(symbols, instruction[2])
 	return "{0:05b}{1:03b}000{2:03b}00".format(op, rs, rt)
 
 def translate_b(instruction, symbols, count):
 	op = opcode(instruction[0])
-	rs = int(instruction[1])
+	rs = register(symbols, instruction[1])
 	label = instruction[2]
 	target = symbols[label]
 	im8 = relative_count(count, target)
