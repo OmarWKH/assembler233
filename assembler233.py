@@ -15,7 +15,7 @@ def binary_to_hex(binary_text):
 
 def assemble(asm_text):
 	symbols = {}
-	symbols.update(find_labels(asm_text))
+	#symbols.update(find_labels(asm_text))
 	output = ''
 	count = 0
 	for line in valid_lines(asm_text):
@@ -132,7 +132,7 @@ def translate_i(instruction, symbols, count):
 	rd = int(instruction[1])
 	rs = int(instruction[2])
 	im5 = int(instruction[3])
-	return "{0:05b}{1:03b}{2:03b}{3:05b}".format(op, rs, rd, im5)
+	return "{0:05b}{1:03b}{2:03b}{3:05b}".format(op, rs, rd, im5 % (1 << 5))
 
 def translate_jr(instruction, symbols, count):
 	op = opcode(instruction[0])
@@ -154,20 +154,24 @@ def translate_sw(instruction, symbols, count):
 def translate_b(instruction, symbols, count):
 	op = opcode(instruction[0])
 	rs = int(instruction[1])
-	label = instruction[2]
-	im8 = symbols[label]
-	return "{0:05b}{1:03b}{2:08b}".format(op, rs, im8)
+	# label = instruction[2]
+	# im8 = symbols[label]
+	im8 = int(instruction[2])
+	return "{0:05b}{1:03b}{2:08b}".format(op, rs, im8 % (1 << 8))
 
 def translate_j(instruction, symbols, count):
 	op = opcode(instruction[0])
+	im11 = int(instruction[1])
+	'''
 	im11 = 0
 	if op >= 30: # j or jal
 		label = instruction[1]
 		im11 = symbols[label]
 	else:
 		im11 = int(instruction[1])
-
-	return "{0:05b}{1:011b}".format(op, im11)
+	'''
+	
+	return "{0:05b}{1:011b}".format(op, im11 % (1 << 11))
 
 def is_comment(instruction):
 	return instruction.startswith('//') or instruction.startswith('#')

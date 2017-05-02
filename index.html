@@ -24,12 +24,11 @@
         <pre>Order of registers: Rd, Rs, Rt
 Refer to registers with their numbers (0..7).
 In lw and sw: Register goes before memory address.
-Put labels between parentheses.
+The immediate in jump and branch is relative, so -1 means previous instruction and 1 means next instruction.
 Lead comments with # or //.
                 
 Example:
 addi 2 1 5  # adds r1 with immediate 5 and stores in r2.
-(end)       # label
-j end       # jump to label</pre>
+j 0         # jump to self</pre>
     </section>
 </body>
