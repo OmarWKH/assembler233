@@ -3,6 +3,9 @@ Packages:
 flask
 '''
 
+# refer to registers with r
+# link code
+
 import assembler233 as ass
 from flask import Flask, render_template, request # web framework @ http://flask.pocoo.org/
 import os # for env variables

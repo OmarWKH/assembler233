@@ -24,11 +24,19 @@
         <pre>Order of registers: Rd, Rs, Rt
 Refer to registers with their numbers (0..7).
 In lw and sw: Register goes before memory address.
-The immediate in jump and branch is relative, so -1 means previous instruction and 1 means next instruction.
+Put labels between parenthesis.
 Lead comments with # or //.
                 
 Example:
+(start)
 addi 2 1 5  # adds r1 with immediate 5 and stores in r2.
-j 0         # jump to self</pre>
+j start     # jump to start (start will be placed with -1)</pre>
+    </section>
+    <section id="changes">
+        <h1>Change logs</h1>
+        <ul>
+            v0.1
+            <li>Jump and branch using labels.</li>
+        </ul>
     </section>
 </body>
