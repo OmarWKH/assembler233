@@ -29,9 +29,12 @@ def assemble(asm_text):
 	count = 0
 	for line in valid_lines(asm_text):
 		if not line.startswith('('):
-			instruction = translate(line, symbols, count)
-			output += (instruction + '\n')
-			count += 1
+			try:
+				instruction = translate(line, symbols, count)
+				output += (instruction + '\n')
+				count += 1
+			except LanguageError as e:
+				return 'Error in line {0}: {1}'.format(count, line)
 	return output
 	
 def valid_lines(text):
@@ -63,8 +66,7 @@ def translate(instruction, symbols, count):
 		translation = f(instruction, symbols, count)
 		return f(instruction, symbols, count)
 	except Exception as e:
-		print('Error on line', count, ': ', instruction)
-		raise e
+		raise LanguageError
 
 def type_function(x):
 	return {
