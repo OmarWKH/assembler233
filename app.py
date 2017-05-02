@@ -25,10 +25,10 @@ def assemble():
         try:
             binary = ass.assemble(asm)
             hexd = ass.binary_to_hex(binary)
-        except LanguageError as e:
+        except ass.LanguageError as e:
             binary = str(e)
         return render_template('index.html', asm_text=asm, binary_text=binary, hexd_text=hexd)
-        
+
 @app.route('/do')
 def do():
     return "hi"
