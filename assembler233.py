@@ -33,8 +33,9 @@ def assemble(asm_text):
 				instruction = translate(line, symbols, count)
 				output += (instruction + '\n')
 				count += 1
-			except LanguageError as e:
-				return 'Error in line {0}: {1}'.format(count, line)
+			except Exception as e:
+				message = 'Error at line {0}: {1}'.format(count, line)
+				raise LanguageError(message)
 	return output
 	
 def valid_lines(text):
@@ -62,11 +63,8 @@ def register(symbols, symbol):
 def translate(instruction, symbols, count):
 	instruction = instruction.split()
 	f = type_function(instruction[0])
-	try:
-		translation = f(instruction, symbols, count)
-		return f(instruction, symbols, count)
-	except Exception as e:
-		raise LanguageError
+	translation = f(instruction, symbols, count)
+	return f(instruction, symbols, count)
 
 def type_function(x):
 	return {

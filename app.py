@@ -20,8 +20,13 @@ def assemble():
         return render_template('index.html', asm_text='set 5')
     elif request.method == 'POST':
         asm = request.form['asm']
-        binary = ass.assemble(asm)
-        hexd = ass.binary_to_hex(binary)
+        binary = ''
+        hexd = ''
+        try:
+            binary = ass.assemble(asm)
+            hexd = ass.binary_to_hex(binary)
+        except LanguageError as e:
+            binary = str(e)
         return render_template('index.html', asm_text=asm, binary_text=binary, hexd_text=hexd)
         
 @app.route('/do')
