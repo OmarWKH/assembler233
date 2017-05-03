@@ -1,17 +1,11 @@
-'''
-Packages:
-flask
-'''
-
 import assembler233 as ass
 import io
 from flask import Flask, render_template, request # web framework @ http://flask.pocoo.org/
 import os # for env variables
 
 app = Flask(__name__, template_folder='.') # the Flask app will find event.html template in current folder
-# app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'this_should_be_configured')
 
-## Views ##
+## Routing ##
 @app.route('/', methods=['GET', 'POST'])
 def assemble():
     if request.method == 'GET':

@@ -1,4 +1,3 @@
-# refer to Hack's assmebler.py for original what-if/to-do
 import io
 import re
 from contextlib import contextmanager
