@@ -1,19 +1,28 @@
 # refer to Hack's assmebler.py for original what-if/to-do
+# still work with lines?
+# __main__ with files
 from pathlib import Path
+import io
 import re
 from contextlib import contextmanager
 
-def assemble_to_hex(asm_file):
-	return binary_to_hex(assemble(asm_file))
+def assemble_to_hex(asm_input_stream, hex_output_stream):
+	binary = assemble(asm_input_stream, io.StringIO())
+	return binary_to_hex(binary, hex_output_stream)
 
-def binary_to_hex(binary_text):
-	output = ''
-	for line in valid_lines(binary_text):
+def binary_to_hex(binary_input_stream, hex_output_stream):
+	binary_input_stream.seek(0) # start from the beginning
+	
+	for line in binary_input_stream.readlines():
 		translation = format(int(line, 2), '04x')
-		output += (translation + '\n')
-	return output
+		hex_output_stream.write(translation + '\n')
+	
+	binary_input_stream.close()
+	return hex_output_stream
 
-def assemble(asm_text):
+def assemble(asm_input_stream, binary_output_stream):
+	asm_input_stream.seek(0) # start from the beginning
+	
 	symbols = {
 		'R0':		0,
 		'R1':		1,
@@ -24,31 +33,34 @@ def assemble(asm_text):
 		'R6':		6,
 		'R7':		7,
 	}
-	symbols.update(find_labels(asm_text))
-	output = ''
+	symbols.update(find_labels(asm_input_stream))
+	
 	count = 0
-	for line in valid_lines(asm_text):
+	for line in valid_lines(asm_input_stream):
 		if not line.startswith('('):
 			try:
 				instruction = translate(line, symbols, count)
-				output += (instruction + '\n')
+				binary_output_stream.write(instruction + '\n')
 				count += 1
 			except Exception as e:
 				message = 'Error at line {0}: {1}'.format(count, line)
 				raise LanguageError(message)
-	return output
 	
-def valid_lines(text):
-	for line in text.splitlines():
+	asm_input_stream.close()
+	return binary_output_stream
+	
+def valid_lines(input_stream):
+	for line in input_stream:
 		if not line.isspace():
 			line = line.strip()
 			if not is_comment(line):
 				yield line
+	input_stream.seek(0) # go back to start of stream
 
-def find_labels(asm_text):
+def find_labels(asm_input_stream):
 	labels = {}
 	count = 0
-	for line in valid_lines(asm_text):
+	for line in valid_lines(asm_input_stream):
 		match = re.match(r'[(](?P<label>[a-zA-Z_.$:][\w.$:]*)[)]', line)
 		if match:
 			label = match.group('label')
