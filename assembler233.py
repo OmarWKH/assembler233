@@ -1,7 +1,4 @@
 # refer to Hack's assmebler.py for original what-if/to-do
-# still work with lines?
-# __main__ with files
-from pathlib import Path
 import io
 import re
 from contextlib import contextmanager
