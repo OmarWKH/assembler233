@@ -1,5 +1,5 @@
 # assembler233
-A simple assembler for a simple assembly language used for the CPU design project in KFUPM's ICS 233. Because I couldn't be bothered with assembling instructions by hand :D
+A simple assembler for a simple assembly language used for the CPU design project in KFUPM's ICS 233. Because I couldn't be bothered with translating instructions by hand :D
 
 # Usage
 - Use the [online website](https://sleepy-falls-81898.herokuapp.com/).
