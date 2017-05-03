@@ -11,3 +11,17 @@ Note: The main logic is in `assembler233.py`
 - handle faulty assembly and file paths properly
 - test file_assembly.py on linux and mac
 - optimize file io
+
+# Syntax
+- Order of registers: Rd, Rs, Rt
+- Refer to registers as r0, r1, .., r7.
+- In lw and sw: Register goes before memory address.
+- Put labels between parenthesis.
+- Lead comments with # or //.
+
+## Example:
+```
+(start)
+addi r2 r1 5    # adds r1 with immediate 5 and stores in r2.
+j start         # jump to start (start will be replaced with -1)
+```
